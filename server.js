@@ -13,7 +13,7 @@ console.log(jsonData);
 
 
 // For Test only
-// const tableData = require('./db/tableData'); //For test only
+// const tableData = require('./db/tableData');
 
 
 
