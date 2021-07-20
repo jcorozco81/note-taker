@@ -1,34 +1,24 @@
+// Modules
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
-
 const uniqid = require('uniqid'); //Unique ID Package
 
+// Variables
 let jsonFileRaw = fs.readFileSync('db/db.json');
 let jsonData = JSON.parse(jsonFileRaw);
 console.log(jsonData);
-
-
-
-
-
-// For Test only
-// const tableData = require('./db/tableData');
-
-
 
 // Sets Express
 const app = express();
 const PORT = process.env.PORT || 3030;
 
-// Sets up the Express app to handle data parsing
+// Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.static('public'));
 
-
-// Routes
-app.use(express.static('public')); //from https://stackoverflow.com/questions/24582338/how-can-i-include-css-files-using-node-express-and-ejs
-
+// .html Routes
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'public/index.html')));
 app.get('/notes', (req, res) => res.sendFile(path.join(__dirname, 'public/notes.html')));
 
@@ -44,11 +34,7 @@ app.post('/api/notes', (req, res) => {
       console.log("Note added");
       writeToFile(jsonData);
       return res.end();
-
 });
-
-
-
 
 app.delete('/api/notes/:id', (req, res) => 
 {
